@@ -6,7 +6,7 @@
 /*   By: daekim <daekim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 20:15:53 by daekim            #+#    #+#             */
-/*   Updated: 2021/01/18 23:46:06 by daekim           ###   ########.fr       */
+/*   Updated: 2021/01/19 11:58:05 by daekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 4231
 # endif
 
 int		get_next_line(int fd, char **line);
