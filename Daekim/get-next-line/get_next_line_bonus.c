@@ -6,7 +6,7 @@
 /*   By: daekim <daekim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 20:14:27 by daekim            #+#    #+#             */
-/*   Updated: 2021/01/18 23:48:00 by daekim           ###   ########.fr       */
+/*   Updated: 2021/01/20 15:50:38 by daekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,10 @@ int				in_line(char **newline, char **line, int i)
 	char		*ret;
 
 	(*newline)[i] = 0;
-	*line = ft_strdup(*newline);
+	if (!(*line = ft_strdup(*newline)))
+		return (-1);
 	if (!(ret = ft_strdup(*newline + i + 1)))
-	{
-		free(*newline);
-		*newline = 0;
-		return (0);
-	}
+		return (-1);
 	free(*newline);
 	*newline = ret;
 	return (1);
@@ -48,18 +45,16 @@ int				backup(char **newline, char **line, int r)
 	int			new_idx;
 
 	if (r < 0)
-	{
-		*line = ft_strdup("");
 		return (-1);
-	}
 	if (*newline == 0)
 	{
 		*line = ft_strdup("");
 		return (0);
 	}
-	if (*newline && (new_idx = ft_find(*newline, '\n')) >= 0)
+	if ((new_idx = ft_find(*newline, '\n')) >= 0)
 		return (in_line(newline, line, new_idx));
-	*line = ft_strdup(*newline);
+	if (!(*line = ft_strdup(*newline)))
+		return (-1);
 	free(*newline);
 	*newline = 0;
 	return (0);
@@ -80,7 +75,8 @@ int				get_next_line(int fd, char **line)
 	while ((rd_size = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
 		buf[rd_size] = 0;
-		temp = ft_strjoin(newline[fd], buf);
+		if (!(temp = ft_strjoin(newline[fd], buf)))
+			return (-1);
 		free(newline[fd]);
 		newline[fd] = temp;
 		if ((new_idx = ft_find(newline[fd], '\n')) >= 0)
