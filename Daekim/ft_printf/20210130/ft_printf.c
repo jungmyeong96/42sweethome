@@ -6,34 +6,42 @@
 /*   By: daekim <daekim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 14:40:45 by daekim            #+#    #+#             */
-/*   Updated: 2021/01/28 17:56:35 by daekim           ###   ########.fr       */
+/*   Updated: 2021/01/30 17:36:23 by daekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
-int			ft_div(va_list ap, char c)
+void		ft_struct(t_cond *con)
+{
+	con->minus = 0;
+	con->zero = 0;
+	con->width = 0;
+	con->dot = 0;
+	con->pre = 0;
+	con->p_star = 0;
+	con->minus_pre = 0;
+}
+
+int			ft_div(va_list ap, char c, t_cond *con)
 {
 	int ret;
 
 	ret = 0;
 	if (c == 'c')
-		ret += put_chr(ap);
+		ret = put_chr(ap, con);
 	else if (c == 's')
-		ret += put_str(ap);
+		ret = put_str(ap, con);
 	else if (c == 'p')
-		ret += put_poi(ap);
-/*	else if (c == 'd')
-		put_dig(str, ap, &i, c);
-	else if (c == 'i')
-		put_sii(str, ap, &i, c);
+		ret = put_poi(ap, con);
+	else if (c == 'd' || c == 'i')
+		ret = put_dig(ap, con);
 	else if (c == 'u')
-		put_uni(str, ap, &i, c);
+		ret = put_uni(ap, con);
 	else if (c == 'x' || c == 'X')
-		put_hex(str, ap, &i, c);
+		ret = put_hex(ap, c, con);
 	else if (c == '%')
-		put_per(str, ap, &i, c);*/
+		ret = put_per('%', con);
 	return (ret);
 }
 
@@ -41,23 +49,22 @@ int			check_cond(const char *str, va_list ap, int *i)
 {
 	int		idx;
 	int		ret;
+	t_cond	con;
 
 	idx = *i;
 	ret = 0;
 	while (str[++idx])
 	{
-//		if (str[idx] == '0' || str[idx] = '-')
-//			ret += check_flag(str, ap, &idx);
-//		if (str[idx] > '0' && str[idx] <= '9')
-//			ret +=check_width(str, ap, &idx);
-//		if (str[idx] == '.')
-//			ret += check_pre(str, ap, &idx);
+		ft_struct(&con);
+		ft_opt(str, ap, &idx, &con);
 		if (str[idx])
 		{
-			ret += ft_div(ap, str[idx]);
-			break;
+			ret = ft_div(ap, str[idx], &con);
+			if (ret == -1)
+				return (ret);
+			break ;
 		}
-		idx++;
+//		idx++;
 	}
 	*i = idx;
 	return (ret);
@@ -68,6 +75,7 @@ int			ft_printf(const char *str, ...)
 	va_list	ap;
 	int		i;
 	int		ret;
+	int		temp;
 
 	i = 0;
 	ret = 0;
@@ -82,22 +90,14 @@ int			ft_printf(const char *str, ...)
 		if (str[i] == 0)
 			return (ret);
 		if (str[i] == '%')
-			ret += check_cond(str, ap, &i);
+		{
+			temp = check_cond(str, ap, &i);
+			if (temp == -1)
+				return (-1);
+			ret += temp;
+		}
 		i++;
 	}
 	va_end(ap);
 	return (ret);
-}
-
-int	main()
-{
-	char c;
-	char *s;
-	int ret;
-
-	c = '0';
-	s = "please";
-	ret = ft_printf("test char : %s, %c, %p", s, c, s);
-	printf("\n%d\n", ret);
-	return (0);
 }
