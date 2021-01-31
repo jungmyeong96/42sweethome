@@ -6,13 +6,13 @@
 /*   By: daekim <daekim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 14:40:45 by daekim            #+#    #+#             */
-/*   Updated: 2021/01/28 17:14:57 by daekim           ###   ########.fr       */
+/*   Updated: 2021/01/28 18:02:36 by daekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void		ft_struct(t_con cond)
+/*void		ft_struct(t_con cond)
 {
 	cond->minus = 0;
 	cond->zero = 0;
@@ -21,7 +21,7 @@ void		ft_struct(t_con cond)
 	cond->igwid = 0;
 	cond->pre = 0;
 	cond->type = 0;
-}
+}*/
 
 int			ft_div(va_list ap, char c)
 {
@@ -47,12 +47,12 @@ int			ft_div(va_list ap, char c)
 
 int			check_cond(const char *str, va_list ap, int *i)
 {
-	int		idx;
+//	int		idx;
 	int		ret;
 
-	idx = *i;
+//	idx = *i;
 	ret = 0;
-	while (str[++idx])
+	while (str[(*i)++])
 	{
 //		if (str[idx] == '0' || str[idx] = '-')
 //			ret += check_flag(str, ap, &idx);
@@ -61,14 +61,13 @@ int			check_cond(const char *str, va_list ap, int *i)
 //		if (str[idx] == '.')
 //			ret += check_pre(str, ap, &idx);
 //		ft_opt(str, ap, &idx);
-		if (str[idx])
+		if (str[*i])
 		{
-			ret += ft_div(ap, str[idx]);
+			ret += ft_div(ap, str[*i]);
 			break;
 		}
-		idx++;
+		++*i;
 	}
-	*i = idx;
 	return (ret);
 }
 
