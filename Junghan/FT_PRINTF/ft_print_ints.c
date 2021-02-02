@@ -6,7 +6,7 @@
 /*   By: junghan <junghan@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:52:08 by junghan           #+#    #+#             */
-/*   Updated: 2021/02/02 14:22:48 by junghan          ###   ########.fr       */
+/*   Updated: 2021/02/02 19:37:40 by junghan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_no_hyphen2(char *str, int width, t_info info, int sign)
 	str_len = ft_strlen(str);
 	prenum = (info.p_num > str_len) ? info.p_num - str_len : 0;
 	hy_zero = (info.f_zero == YES && (info.p_existence == NODOT ||
-				(info.p_num < 0 && prenum <= 0))) ? "0" : " ";
+				info.p_num < 0)) ? "0" : " ";
 	if (sign < 0 && info.f_zero == YES && width > 0 &&
 			(info.p_num < 0 || info.p_existence == NODOT))
 	{

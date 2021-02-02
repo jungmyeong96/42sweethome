@@ -6,7 +6,7 @@
 /*   By: junghan <junghan@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 15:13:23 by junghan           #+#    #+#             */
-/*   Updated: 2021/02/02 16:07:15 by junghan          ###   ########.fr       */
+/*   Updated: 2021/02/02 17:34:47 by junghan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int		ft_apply_to_int(va_list *ap, t_info info, int *result)
 	if (ft_check_zero(info, num, result))
 		return (1);
 	(*result) += ft_print_int(int_str, info, sign);
+	free(int_str);
+	int_str = 0;
 	return (1);
 }
 
