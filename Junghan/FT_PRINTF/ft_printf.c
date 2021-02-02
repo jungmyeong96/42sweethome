@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_chg_to_hex.c                                    :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junghan <junghan@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/28 23:33:27 by junghan           #+#    #+#             */
-/*   Updated: 2021/01/29 18:20:47 by junghan          ###   ########.fr       */
+/*   Created: 2021/01/17 17:27:08 by junghan           #+#    #+#             */
+/*   Updated: 2021/02/02 13:02:38 by junghan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_chg_to_hex(unsigned int num, const char *spec)
+int	ft_printf(const char *format, ...)
 {
-	char	*hex;
-	char	*result;
-	int		idx;
+	va_list ap;
+	int		count;
 
-	if (!(result = (char *)ft_calloc(sizeof(char), 8)))
-		return (0);
-	if (*spec == 'x' || *spec == 'p')
-		hex = "0123456789abcdef";
-	else if (*spec == 'X')
-		hex = "0123456789ABCDEF";
-	idx = 7;
-	while (idx >= 0)
-	{
-		result[idx] = hex[num % 16];
-		num = num / 16;
-		idx--;
-	}
-	return (result);
+	va_start(ap, format);
+	if ((count = ft_parse_arg(&ap, format)) < 0)
+		return (-1);
+	va_end(ap);
+	return (count);
 }

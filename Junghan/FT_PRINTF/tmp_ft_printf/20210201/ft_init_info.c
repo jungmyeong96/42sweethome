@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_init_info.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junghan <junghan@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/24 02:11:27 by junghan           #+#    #+#             */
-/*   Updated: 2020/12/28 20:37:27 by junghan          ###   ########.fr       */
+/*   Created: 2021/01/21 16:40:52 by junghan           #+#    #+#             */
+/*   Updated: 2021/02/01 15:42:41 by junghan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+void	ft_init_info(t_info *info)
 {
-	unsigned char *tmp_dest;
-	unsigned char *tmp_src;
-
-	tmp_dest = (unsigned char *)dest;
-	tmp_src = (unsigned char *)src;
-	if (dest == NULL && src == NULL)
-		return (dest);
-	while (n > 0)
-	{
-		*tmp_dest = *tmp_src;
-		tmp_dest++;
-		tmp_src++;
-		n--;
-	}
-	return (dest);
+	info->f_hyphen = 0;
+	info->f_zero = 0;
+	info->w_num = 0;
+	info->p_num = 0;
+	info->p_existence = 0;
+	info->p_asterisk = 0;
 }

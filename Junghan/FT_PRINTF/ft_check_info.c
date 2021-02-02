@@ -6,7 +6,7 @@
 /*   By: junghan <junghan@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 16:50:16 by junghan           #+#    #+#             */
-/*   Updated: 2021/01/29 17:34:40 by junghan          ###   ########.fr       */
+/*   Updated: 2021/02/02 13:13:10 by junghan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_check_flag(char *spec, t_info *info)
 		if (tmp && (*is_flag) == '-')
 			info->f_hyphen = YES;
 		else if (tmp && (*is_flag) == '0')
-			info->f_zero = NO;
+			info->f_zero = YES;
 		tmp++;
 	}
 	if (tmp == 0)
@@ -33,21 +33,18 @@ char	*ft_check_flag(char *spec, t_info *info)
 	return (tmp);
 }
 
-int		ft_num_asterisk(va_list ap, char **spec, int *error)
+int		ft_num_ast(va_list *ap, char **spec, int *error, t_info *info)
 {
-	const char	*is_num;
-	char		*check_num;
 	int			result;
 
-	check_num = "0123456789";
 	result = 0;
 	if (**spec && ('0' <= **spec && **spec <= '9'))
 	{
-		while ((is_num = ft_strchr(check_num, **spec)) != 0)
+		while ('0' <= **spec && **spec <= '9')
 		{
 			if (result > 2147483646)
 				return (0);
-			result = result * 10 + ((*is_num) - '0');
+			result = result * 10 + ((**spec) - '0');
 			if (!(++(*spec)))
 				return (0);
 		}
@@ -55,14 +52,16 @@ int		ft_num_asterisk(va_list ap, char **spec, int *error)
 	else if (*spec && **spec == '*' && result == 0)
 	{
 		(*spec)++;
-		if ((result = va_arg(ap, int)) > 2147483646)
+		if (info->p_existence == DOTNUM)
+			info->p_asterisk = YES;
+		if ((result = va_arg(*ap, int)) > 2147483646)
 			return (0);
 	}
 	*error = NO;
 	return (result);
 }
 
-char	*ft_check_width(va_list ap, char *spec, t_info *info)
+char	*ft_check_width(va_list *ap, char *spec, t_info *info)
 {
 	int		width_num;
 	int		error;
@@ -71,7 +70,7 @@ char	*ft_check_width(va_list ap, char *spec, t_info *info)
 	tmp = spec;
 	error = YES;
 	width_num = 0;
-	if ((!(width_num = ft_num_asterisk(ap, &tmp, &error)))
+	if ((!(width_num = ft_num_ast(ap, &tmp, &error, info)))
 			&& error == YES)
 		return (0);
 	if (width_num < 0)
@@ -83,7 +82,7 @@ char	*ft_check_width(va_list ap, char *spec, t_info *info)
 	return (tmp);
 }
 
-char	*ft_check_precision(va_list ap, char *spec, t_info *info)
+char	*ft_check_precision(va_list *ap, char *spec, t_info *info)
 {
 	int		pre_num;
 	int		error;
@@ -102,17 +101,17 @@ char	*ft_check_precision(va_list ap, char *spec, t_info *info)
 			tmp++;
 		}
 		if (*tmp && (!('0' <= *tmp && *tmp <= '9') && (*tmp) != '*'))
-			info->p_existence = NODOT;
-		if ((!(pre_num = ft_num_asterisk(ap, &tmp, &error))) && error == YES)
-			return (0);
-		if (info->p_existence != NODOT)
+			info->p_existence = ONLYDOT;
+		else
 			info->p_existence = DOTNUM;
+		if ((!(pre_num = ft_num_ast(ap, &tmp, &error, info))) && error == YES)
+			return (0);
 	}
 	info->p_num = (pre_num * sign);
 	return (tmp);
 }
 
-char	*ft_check_info(va_list ap, const char *spec, t_info *info)
+char	*ft_check_info(va_list *ap, const char *spec, t_info *info)
 {
 	char *tmp;
 
