@@ -1,24 +1,35 @@
 FROM	debian:buster
 
-LABEL	maintainer="daekim@student.42seoul.kr"
-
 RUN		apt-get update
 RUN		apt-get upgrade -y
 
-RUN		apt-get -y install vim
-RUN		apt-get -y install wget
-RUN		apt-get -y install nginx
-RUN		apt-get -y install openssl
-RUN		apt-get -y install php-fpm
-RUN		apt-get -y install mariadb-server
-RUN		apt-get -y install php-mysql
+RUN		apt-get -y install vim wget curl nginx openssl php-fpm mariadb-server php-mysql
 
 
-COPY	./srcs/default ./tmp
-COPY	./srcs/wp-config.php ./tmp
-COPY	./srcs/config.inc.php ./tmp
-COPY	./srcs/run.sh ./
+COPY	./srcs/default ./etc/nginx/sites-available/default
 
-EXPOSE	80 443
+RUN		openssl req -x509 -nodes -days 365 -newkey rsa:4096 -subj "/C=KR/ST=Gyeonggi/L=Seongnam/O=42seoul/OU=Gun/CN=localhost" -keyout /etc/ssl/private/localhost.dev.key -out /etc/ssl/certs/localhost.dev.crt
 
-CMD		bash run.sh
+
+RUN		wget https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-all-languages.tar.gz
+RUN		tar -xvf phpMyAdmin-5.0.2-all-languages.tar.gz
+RUN		mv phpMyAdmin-5.0.2-all-languages phpmyadmin
+RUN		mv phpmyadmin /var/www/html/
+COPY	./srcs/config.inc.php ./phpmyadmin
+
+RUN		wget https://wordpress.org/latest.tar.gz
+RUN		tar -xvf latest.tar.gz
+RUN		mv wordpress/ var/www/html/
+COPY	./srcs/wp-config.php /var/www/html/wordpress
+
+RUN		chown -R www-data:www-data /var/www/html/wordpress
+
+
+CMD		service mysql start;\
+		service php7.3-fpm start;\
+		echo "CREATE USER 'daekim'@'localhost' identified by '';" | mysql -u root --skip-password;\
+		echo "CREATE DATABASE wordpress;" | mysql -u root --skip-password;\
+		echo "GRANT ALL PRIVILEGES ON *.* TO 'daekim'@'localhost' IDENTIFIED BY '123456' WITH GRANT OPTION" | mysql -u root --skip-password ;\
+ 	 	echo "FLUSH PRIVILEGES;" | mysql -u root --skip-password;\
+		service nginx start;\
+		sleep inf
