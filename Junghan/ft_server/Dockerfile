@@ -24,6 +24,7 @@ COPY	./srcs/wp-config.php /var/www/html/wordpress
 
 RUN	chown -R www-data:www-data /var/www/html/wordpress
 
+EXPOSE 80 443
 
 CMD	service mysql start;\
 	service php7.3-fpm start;\
@@ -31,5 +32,4 @@ CMD	service mysql start;\
 	echo "CREATE DATABASE wordpress;" | mysql -u root --skip-password;\
 	echo "GRANT ALL PRIVILEGES ON *.* TO 'junghan'@'localhost' IDENTIFIED BY '123456' WITH GRANT OPTION" | mysql -u root --skip-password ;\
  	echo "FLUSH PRIVILEGES;" | mysql -u root --skip-password;\
-	service nginx start;\
-	sleep inf
+	nginx -g "daemon off;"
