@@ -6,12 +6,11 @@
 /*   By: daekim <daekim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 05:00:28 by daekim            #+#    #+#             */
-/*   Updated: 2021/03/03 06:02:28 by daekim           ###   ########.fr       */
+/*   Updated: 2021/02/28 18:50:03 by daekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-#include <unistd.h>
 
 void		c_base2(t_info *p, t_cal2 *c, int y)
 {
@@ -31,11 +30,9 @@ void		c_base2(t_info *p, t_cal2 *c, int y)
 			c->f_tex = 3;
 		else
 			c->f_tex = 4;
-		c->c_tex = 6;
+			c->c_tex = 6;
 		c->color_f = p->texture[c->f_tex][tex_w * c->ty + c->tx];
 		c->color_f = (c->color_f >> 1) & 8355711;
-		printf("%d\n", c->color_f);
-		sleep(3000);
 		p->buf[y][x] = c->color_f;
 		c->color_f = p->texture[c->c_tex][tex_w * c->ty + c->tx];
 		c->color_f = (c->color_f >> 1) & 8355711;
