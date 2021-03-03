@@ -6,27 +6,26 @@
 /*   By: daekim <daekim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 05:00:28 by daekim            #+#    #+#             */
-/*   Updated: 2021/03/03 06:02:28 by daekim           ###   ########.fr       */
+/*   Updated: 2021/03/03 06:03:24 by daekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-#include <unistd.h>
 
 void		c_base2(t_info *p, t_cal2 *c, int y)
 {
 	int		x;
 
 	x = -1;
-	while (++x < win_w)
+	while (++x < p->data.win_w)
 	{
-		c->cellX = (int)(c->floorX);
-		c->cellY = (int)(c->floorY);
-		c->tx = (int)(tex_w * (c->floorX - c->cellX)) & (tex_w - 1);
-		c->ty = (int)(tex_h * (c->floorY - c->cellY)) & (tex_h - 1);
-		c->floorX += c->f_stepX;
-		c->floorY += c->f_stepY;
-		c->ch_pat = ((int)(c->cellX + c->cellY)) & 1;
+		c->cell_x = (int)(c->floor_x);
+		c->cell_y = (int)(c->floor_y);
+		c->tx = (int)(tex_w * (c->floor_x - c->cell_x)) & (tex_w - 1);
+		c->ty = (int)(tex_h * (c->floor_y - c->cell_y)) & (tex_h - 1);
+		c->floor_x += c->f_step_x;
+		c->floor_y += c->f_step_y;
+		c->ch_pat = ((int)(c->cell_x + c->cell_y)) & 1;
 		if (c->ch_pat == 0)
 			c->f_tex = 3;
 		else
@@ -34,36 +33,34 @@ void		c_base2(t_info *p, t_cal2 *c, int y)
 		c->c_tex = 6;
 		c->color_f = p->texture[c->f_tex][tex_w * c->ty + c->tx];
 		c->color_f = (c->color_f >> 1) & 8355711;
-		printf("%d\n", c->color_f);
-		sleep(3000);
 		p->buf[y][x] = c->color_f;
 		c->color_f = p->texture[c->c_tex][tex_w * c->ty + c->tx];
 		c->color_f = (c->color_f >> 1) & 8355711;
-		p->buf[win_h - y - 1][x] = c->color_f;
+		p->buf[p->data.win_h - y - 1][x] = c->color_f;
 	}
 }
 
 void		c_base1(t_info *p, t_cal2 *c, int y)
 {
-	c->rayX0 = p->dirX - p->planeX;
-	c->rayY0 = p->dirY - p->planeY;
-	c->rayX1 = p->dirX + p->planeX;
-	c->rayY1 = p->dirY + p->planeY;
-	c->per = y - win_h / 2;
-	p->posZ = 0.5 * win_h;
-	c->row = p->posZ / c->per;
-	c->f_stepX = c->row * (c->rayX1 - c->rayX0) / win_w;
-	c->f_stepY = c->row * (c->rayY1 - c->rayY0) / win_w;
-	c->floorX = p->posX + c->row * c->rayX0;
-	c->floorY = p->posY + c->row * c->rayY0;
+	c->ray_x0 = p->dir_x - p->plane_x;
+	c->ray_y0 = p->dir_y - p->plane_y;
+	c->ray_x1 = p->dir_x + p->plane_x;
+	c->ray_y1 = p->dir_y + p->plane_y;
+	c->per = y - p->data.win_h / 2;
+	p->pos_z = 0.5 * p->data.win_h;
+	c->row = p->pos_z / c->per;
+	c->f_step_x = c->row * (c->ray_x1 - c->ray_x0) / p->data.win_w;
+	c->f_step_y = c->row * (c->ray_y1 - c->ray_y0) / p->data.win_w;
+	c->floor_x = p->pos_x + c->row * c->ray_x0;
+	c->floor_y = p->pos_y + c->row * c->ray_y0;
 }
 
 void		calc_fl(t_info *p)
 {
 	int		y;
 
-	y = win_h / 2 + 1;
-	while (y < win_h)
+	y = p->data.win_h / 2 + 1;
+	while (y < p->data.win_h)
 	{
 		c_base1(p, &p->cal2, y);
 		c_base2(p, &p->cal2, y);
