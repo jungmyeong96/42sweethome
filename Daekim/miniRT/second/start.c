@@ -6,7 +6,7 @@
 /*   By: daekim <daekim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:05:06 by daekim            #+#    #+#             */
-/*   Updated: 2021/02/24 04:46:24 by daekim           ###   ########.fr       */
+/*   Updated: 2021/03/17 01:31:10 by daekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ int			main()
 
 	//image
 	double	rate = 1;
-	int		img_w = 500;
+	int		img_w = 1920;
 	int		img_h = img_w / rate;
 	int		sample_p = 3;
 	int		max_depth = 10;
