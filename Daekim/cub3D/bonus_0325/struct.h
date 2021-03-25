@@ -1,0 +1,238 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daekim <daekim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/26 19:18:11 by daekim            #+#    #+#             */
+/*   Updated: 2021/03/16 06:38:26 by daekim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef STRUCT_H
+# define STRUCT_H
+
+# include "cub.h"
+
+typedef struct		s_img
+{
+	void			*img_p;
+	int				*data;
+	int				img_w;
+	int				img_h;
+	int				bpp;
+	int				size_l;
+	int				endian;
+}					t_img;
+
+typedef struct		s_cal2
+{
+	int				is_floor;
+	double			cam_z;
+	double			ray_x0;
+	double			ray_y0;
+	double			ray_x1;
+	double			ray_y1;
+	int				per;
+	double			row;
+	double			f_step_x;
+	double			f_step_y;
+	double			floor_x;
+	double			floor_y;
+	int				cell_x;
+	int				cell_y;
+	int				cx;
+	int				cy;
+	int				fx;
+	int				fy;
+	int				tx;
+	int				ty;
+	int				f_tex;
+	int				c_tex;
+	int				color;
+	int				ch_pat;
+}					t_cal2;
+
+typedef struct		s_cal
+{
+	double			camera_x;
+	double			raydir_x;
+	double			raydir_y;
+	int				map_x;
+	int				map_y;
+	double			side_x;
+	double			side_y;
+	double			delta_x;
+	double			delta_y;
+	double			wall;
+	int				step_x;
+	int				step_y;
+	int				hit;
+	int				side;
+	int				line_h;
+	int				draw_st;
+	int				draw_en;
+	int				color;
+	double			step;
+	int				tex_n;
+	double			wall_x;
+	int				tex_x;
+	int				tex_y;
+	double			tex_pos;
+	int				c_rgb;
+	int				f_rgb;
+	int				color_f;
+	int				color_c;
+	double			fl_xw;
+	double			fl_yw;
+	double			d_wall;
+	double			d_play;
+	double			c_dist;
+	double			wei;
+	double			c_fl_x;
+	double			c_fl_y;
+	int				fl_tex_x;
+	int				fl_tex_y;
+}					t_cal;
+
+typedef struct		s_wh
+{
+	int				tex_w;
+	int				tex_h;
+}					t_wh;
+
+typedef struct		s_s
+{
+	double			x;
+	double			y;
+	int				tex;
+}					t_s;
+
+typedef struct		s_sprite
+{
+	double			*zbuf;
+	int				*sp_ord;
+	double			*sp_dis;
+	double			sp_x;
+	double			sp_y;
+	double			mat;
+	double			trans_x;
+	double			trans_y;
+	int				screen_x;
+	int				sp_h;
+	int				sp_w;
+	int				dr_st_y;
+	int				dr_en_y;
+	int				dr_st_x;
+	int				dr_en_x;
+	int				tex_x;
+	int				tex_y;
+	int				d;
+	int				color3;
+	double			udiv;
+	double			vdiv;
+	double			v_move;
+	int				move_sc;
+	int				sp_flag;
+}					t_spr;
+
+typedef struct		s_data
+{
+	int				fd;
+	char			**map;
+	int				m_num;
+	int				win_w;
+	int				win_h;
+	char			*path;
+}					t_data;
+
+typedef struct		s_save
+{
+
+	int				size_b;
+	char			*bmp;
+	unsigned char	header[14];
+	unsigned char	data[40];
+	unsigned char	pad[3];
+	int				color_b;
+	int				fd_b;
+}					t_save;
+
+typedef struct		s_info
+{
+	void			*mlx_p;
+	void			*win_p;
+	double			pos_x;
+	double			pos_y;
+	double			pos_z;
+	double			dir_x;
+	double			dir_y;
+	double			plane_x;
+	double			plane_y;
+	double			pitch;
+	double			o_dir_x;
+	double			o_plane_x;
+	double			move;
+	double			rot;
+	int				**buf;
+	int				**texture;
+	t_cal			cal;
+	t_cal2			cal2;
+	t_spr			sp;
+	t_img			img;
+	int				key_w;
+	int				key_s;
+	int				key_d;
+	int				key_a;
+	int				key_e;
+	int				key_q;
+	int				key_p;
+	int				key_al;
+	int				key_ar;
+	char			key_ws;
+	char			key_ad;
+	char			key_qe;
+	char			key_aa;
+	int				key_sit;
+	int				key_jump;
+	int				key_up;
+	int				key_down;
+	char			key_ud;
+	int				key_set;
+	int				click;
+	t_data			data;
+	t_s				*sprite;
+	t_wh			*twh;
+	int				sp_count;
+	int				sp2;
+	int				sp3;
+	int				sp4;
+	int				sp5;
+	int				sp6;
+	int				is_save;
+	t_save			save;
+	int				*check_ele;
+	int				mou_u;
+	int				mou_d;
+	int				mou_r;
+	int				mou_l;
+	int				mou_lr;
+	int				mou_ud;
+	int				zero_w;
+	int				zero_h;
+	int				move_p;
+	double			d_cent;
+	double			wall_h;
+	double			spr_h;
+	double			w_cent;
+	int				hurt;
+	int				hp;
+	int				**minimap;
+	char			*stage;
+	int				level_up;
+	int				key_o;
+	int				yorn;
+}					t_info;
+
+#endif
