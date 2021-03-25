@@ -14,6 +14,8 @@
 
 void		pick_item(t_info *p, char item)
 {
+	if (item == '3')
+		p->weapon = 1;
 	if (item == '4')
 	{
 		p->hp += 3;
@@ -22,7 +24,7 @@ void		pick_item(t_info *p, char item)
 	}
 }
 
-void	remove_item(t_info *p, int i)
+void		remove_item(t_info *p, int i)
 {
 	if (p->data.map[(int)p->pos_x][(int)p->pos_y] == '3' ||
 		p->data.map[(int)p->pos_x][(int)p->pos_y] == '4' ||

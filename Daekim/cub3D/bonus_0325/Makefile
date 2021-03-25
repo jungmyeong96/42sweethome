@@ -23,13 +23,14 @@ SRCS =		start.c ft_save.c ft_free.c ft_shadow.c \
 			ft_cal_wfc.c ft_move3.c ft_char_n_sp.c ft_perf.c ft_dir.c \
 			ft_press1.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c \
 			ft_draw_n_tex_in.c ft_yorn.c ft_sp_tex.c ft_pick_item.c \
-			ft_hp_bar.c ft_info.c ft_minimap.c ft_stage.c \
+			ft_hp_bar.c ft_info.c ft_minimap.c ft_stage.c ft_weapon.c \
+			ft_attack.c \
 
 OBJS =		$(SRCS:.c=.o)
 
 CC =		gcc
 
-CFLAGS =	-Wall -Wextra -Werror -O3 -g3 -fsanitize=address
+CFLAGS =	-Wall -Wextra -Werror -O3
 
 MLXFLAGS =	-framework OpenGL -framework Appkit
 

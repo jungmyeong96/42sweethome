@@ -80,6 +80,7 @@ int			main(int ac, char **av)
 	p.zero_w = p.data.win_w / 2;
 	p.zero_h = p.data.win_h / 2;
 	p.move_p = 0;
+	mlx_hook(p.win_p, 4, 0, click, &p);
 	mlx_hook(p.win_p, 6, 0, &mouse_move, &p);
 	mlx_loop_hook(p.mlx_p, &main_loop, &p);
 	mlx_loop(p.mlx_p);

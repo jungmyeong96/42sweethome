@@ -34,6 +34,10 @@ void		info2(t_info *p)
 	p->sp4 = 0;
 	p->sp5 = 0;
 	p->sp6 = 0;
+	p->weapon = 0;
+	p->skill1 = 0;
+	p->skill2 = 0;
+	p->skill_t = 0;
 }
 
 void		info(t_info *p)

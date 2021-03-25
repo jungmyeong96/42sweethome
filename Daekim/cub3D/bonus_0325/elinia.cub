@@ -6,7 +6,7 @@ SO ./tex/elinia.xpm
 WE ./tex/elinia2.xpm
 EA ./tex/elinia3.xpm
 
-S ./tex/pairy.xpm ./tex/tree_st.xpm ./tex/orange_potion.xpm ./tex/mana.xpm ./tex/potal_elinia.xpm
+S ./tex/pairy.xpm ./tex/tree_st.xpm ./tex/orange_potion.xpm ./tex/mana.xpm ./tex/potal_elinia.xpm ./tex/sapa_st.xpm
 F ./tex/elinia_floor.xpm
 C ./tex/elinia_sky1.xpm
 
