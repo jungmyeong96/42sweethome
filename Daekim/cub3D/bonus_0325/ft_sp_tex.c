@@ -72,7 +72,7 @@ void	sp_data(t_info *p, char **data)
 	int		n;
 
 	n = 0;
-	while (++n < 6)
+	while (++n < 7)
 	{
 		if (data == 0 || format(data[n], ".xpm") != 1)
 			putstr_err("Error : no such path to xpm!\n");
@@ -80,6 +80,8 @@ void	sp_data(t_info *p, char **data)
 		if (fd == -1)
 			putstr_err("Error : no such xpm!\n");
 		close(fd);
+		if (n == 6)
+			p->dis_wp = ft_strdup(data[n]);
 		tex_in(p, n + 9, data[n], &p->img);
 	}
 }

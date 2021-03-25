@@ -16,6 +16,7 @@
 # define X_KEY_PRESS	2
 # define X_KEY_RELEASE	3
 # define X_BUT_PRESS	4
+# define X_BUT_RELEASE	5
 # define X_KEY_EXIT		17
 
 # define KEY_ESC		53
@@ -63,6 +64,7 @@ void		key_save(int *in_key, char *save_key, int i, char j);
 
 void		calc_fl(t_info *p);
 void		calc_sp(t_info *p);
+void		sp_cal2(t_info *p, t_spr *s, int tex);
 void		calc_wa(t_info *p);
 void		cal_in(t_info *p, t_cal *c, t_spr *sp, int x);
 void		draw(t_info *p);
@@ -111,6 +113,12 @@ void		sp_offset(t_info *info, int i, int j, int *k);
 void		count_item(char sp, t_info *info);
 void		sp_data(t_info *info, char **data);
 void		remove_item(t_info *p, int i);
-
+void		weapon(t_info *p);
+int			click(int b, int x, int y, t_info *p);
+void		put_in_weapon(t_info *p, t_img *img, int n);
+void		attack(t_info *p, t_img *img, char *path);
+int			attack_sp(t_info *p, t_spr *s, int tex);
+void		sp_cal2(t_info *p, t_spr *s, int tex);
+void		sp_or_dam(t_info *p, t_spr *s, int tex);
 
 #endif

@@ -125,7 +125,8 @@ void			calc_sp(t_info *p)
 	while (++i < p->sp_count)
 	{
 		sp_cal1(p, &p->sp, i);
-		sp_cal2(p, &p->sp, p->sprite[p->sp.sp_ord[i]].tex);
+		sp_or_dam(p, &p->sp, p->sprite[p->sp.sp_ord[i]].tex);
+//		sp_cal2(p, &p->sp, p->sprite[p->sp.sp_ord[i]].tex);
 	}
 	free(p->sp.sp_ord);
 	free(p->sp.sp_dis);

@@ -228,11 +228,16 @@ typedef struct		s_info
 	double			w_cent;
 	int				hurt;
 	int				hp;
+	int				weapon;
 	int				**minimap;
 	char			*stage;
 	int				level_up;
 	int				key_o;
 	int				yorn;
+	char			*dis_wp;
+	int				skill_t;
+	int				skill1;
+	int				skill2;
 }					t_info;
 
 #endif

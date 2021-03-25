@@ -14,9 +14,9 @@
 
 void		tex_buf(t_info *p)
 {
-	if (!(p->texture = (int **)ft_calloc(15, sizeof(int *))))
+	if (!(p->texture = (int **)ft_calloc(20, sizeof(int *))))
 		putstr_err("Error : tex first allocate fail!\n");
-	if (!(p->twh = (t_wh *)ft_calloc(15, sizeof(t_wh))))
+	if (!(p->twh = (t_wh *)ft_calloc(20, sizeof(t_wh))))
 		putstr_err("Error : tex_wh allocate fail!\n");
 	if (!(p->check_ele = (int *)ft_calloc(7, sizeof(int))))
 		putstr_err("Error : element allocate fail!\n");
